@@ -1,0 +1,89 @@
+type AnimalShelf [2][]int
+
+
+func Constructor() AnimalShelf {
+    return AnimalShelf{}
+}
+
+
+func (this *AnimalShelf) Enqueue(animal []int)  {
+    tp := animal[1]
+    (*this)[tp] = append((*this)[tp], animal[0])
+    return
+}
+
+
+func (this *AnimalShelf) DequeueAny() []int {
+    switch len((*this)[0]){
+        case 0:{
+            switch len((*this)[1]){
+                case 0:{
+                    return[]int{-1, -1}
+                }
+                default :{
+                    ans := (*this)[1][0]
+                    (*this)[1] = (*this)[1][1:]
+                    return []int{ans, 1}
+                }
+            }
+        }
+        default:{
+            switch len((*this)[1]){
+                case 0:{
+                    ans := (*this)[0][0]
+                    (*this)[0] = (*this)[0][1:]
+                    return []int{ans, 0}
+                }
+                default :{
+                    var idx int
+                    if (*this)[0][0] < (*this)[1][0] {
+                        idx = 0
+                    } else {
+                        idx = 1
+                    }
+                    ans := (*this)[idx][0]
+                    (*this)[idx] = (*this)[idx][1:]
+                    return []int{ans, idx}
+                }
+            }
+        }
+    }
+}
+
+
+func (this *AnimalShelf) DequeueDog() []int {
+    switch len((*this)[1]){
+        case 0:{
+            return[]int{-1, -1}
+        }
+        default :{
+            ans := (*this)[1][0]
+            (*this)[1] = (*this)[1][1:]
+            return []int{ans, 1}
+        }
+    }
+}
+
+
+func (this *AnimalShelf) DequeueCat() []int {
+    switch len((*this)[0]){
+        case 0:{
+            return[]int{-1, -1}
+        }
+        default :{
+            ans := (*this)[0][0]
+            (*this)[0] = (*this)[0][1:]
+            return []int{ans, 0}
+        }
+    }
+}
+
+
+/**
+ * Your AnimalShelf object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Enqueue(animal);
+ * param_2 := obj.DequeueAny();
+ * param_3 := obj.DequeueDog();
+ * param_4 := obj.DequeueCat();
+ */

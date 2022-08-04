@@ -1,0 +1,19 @@
+func timeRequiredToBuy(tickets []int, k int) int {
+    ans := 0
+    for i := 0; i < len(tickets); i++{
+        if i <= k {
+            if tickets[i] <= tickets[k] {
+                ans += tickets[i]
+            } else {
+                ans += tickets[k]
+            }
+        } else {
+            if tickets[i] < tickets[k] {
+                ans += tickets[i]
+            } else {
+                ans += tickets[k] - 1
+            }
+        }
+    }
+    return ans
+}
